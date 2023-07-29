@@ -9,6 +9,8 @@ def main():
     d = ReadFromTxt("sampleInput/inputOmp.txt").parse()
 
     d.print_experiment()
+    d.compute_scalability("OMP")
+    d.print_scal()
     # Plot data
 
     exit(0)

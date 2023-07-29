@@ -13,22 +13,31 @@ class ReadFromTxt(Reader):
 
     def parse(self):
         ret = ExperimentCollection()
-
+        colum_names = None
         with open(self.fName) as f:
-            for line in f.readlines():
-                if "#" in line:
+            for line_num, line in enumerate(f.readlines()):
+                if "#" in line or len(line.split()) == 0:
                     continue  # found comment
 
                 if "$" in line:
-                    continue  # found column names
-
-                if len(line.split()) == 2:
-                    threads, time = line.split()
-                    ret.add_experiment(Experiment(time=float(time), extra_configuration={"OMP": threads}))
-                elif len(line.split()) == 3:
-                    name, threads, time = line.split()
-                    ret.add_experiment(Experiment(name=name, time=float(time), extra_configuration={"OMP": threads}))
-
+                    line = line.replace("$", "")
+                    colum_names = line.split()
+                    print(f"INFO: Detected {colum_names} fields")
+                    if "time" not in colum_names and "throughput" not in colum_names:
+                        raise Exception("Time nor throughput set in the column names")
+                elif colum_names is not None:
+                    data = line.split()
+                    if len(data) != len(colum_names):
+                        print(f"WARNING: Bad column count at line {line_num}, skipping...")
+                        print(data)
+                    else:
+                        d = {}
+                        for i, x, in enumerate(colum_names):
+                            d[x] = data[i]
+                        e = Experiment(**d)
+                    ret.add_experiment(e)
+                else:
+                    raise f"Unable to find column names in input {self.fName}"
         return ret
 
 

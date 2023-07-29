@@ -1,6 +1,7 @@
 #Example multithreading
-$name threads time
-Baseline 1 10
+$OMP time
+
+1 10
+4 2.5
 2 5
-4 1
-8 0.5
+8 4
