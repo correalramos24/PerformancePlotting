@@ -1,57 +1,60 @@
 from typing import List
 
-class Experiment():
-    def __init__(self,  time: float=None,timeUnit: str="s",
-                        throughput:float=None, throughputUnit:str="performance",
-                        name:str=None, extraConfiguration:dict=None) -> None:
 
-        self.name=name
-        self.extraConfiguration=extraConfiguration
+class Experiment:
+    def __init__(self, time: float = None, timeunit: str = "s",
+                 throughput: float = None, throughput_unit: str = "performance",
+                 name: str = None, extra_configuration: dict = None) -> None:
+
+        self.name = name
+        self.extraConfiguration = extra_configuration
 
         if time is None and throughput is None:
             raise Exception("You must provide either time or throught results")
 
         if throughput is None:
-            self.throughputUnit = f"1/{timeUnit}"
+            self.throughputUnit = f"1/{timeunit}"
             self.throughput = 1 / time
         else:
-            self.throughput=throughput
-            self.throughputUnit=throughputUnit
+            self.throughput = throughput
+            self.throughputUnit = throughput_unit
 
-        if name is None and extraConfiguration is not None:
+        if name is None and extra_configuration is not None:
             print("INFO: name not defined, using first config...", end=" ")
-            fstKey = list(extraConfiguration.keys())[0]
-            fstVal = extraConfiguration[fstKey]
-            print(f"set name {fstVal}_{fstKey}")
-            self.name = f"{fstVal}_{fstKey}"
+            fst_key = list(extra_configuration.keys())[0]
+            fst_val = extra_configuration[fst_key]
+            print(f"set name {fst_val}_{fst_key}")
+            self.name = f"{fst_val}_{fst_key}"
 
-    def getConfigByKey(self, key):
+    def get_config_by_key(self, key):
         return self.extraConfiguration[key]
 
-    def getExperimentResults(self): return self.throughputs
+    def get_experiment_result(self):
+        return self.throughput
 
-    def getExperimentUnits(self): return self.throughputUnit
+    def get_experiment_unit(self):
+        return self.throughputUnit
 
     def __repr__(self) -> str:
         ret = f"{self.name} -> {self.throughput} ({self.throughputUnit})"
         return ret
-    
 
-class ExperimentCollection():
-    
+
+class ExperimentCollection:
+
     def __init__(self) -> None:
-        self.results : List(Experiment) = []
+        self.results: List[Experiment] = []
 
-    def addExperiment(self, e: Experiment):
+    def add_experiment(self, e: Experiment):
         self.results.append(e)
 
-    def computeScalability(self, inBase):
-        minVal=None
+    def compute_scalability(self, in_base):
+        min_val = None
         for e in self.results:
-            e.getConfigB
+            pass
 
-    def computeEff(self):
+    def compute_efficiency(self):
         pass
 
-    def printExperiments(self):
-        list(map(lambda e : print(repr(e)), self.results))
+    def print_experiment(self):
+        list(map(lambda e: print(repr(e)), self.results))
