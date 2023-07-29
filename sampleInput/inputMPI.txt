@@ -1,0 +1,7 @@
+#Example multithreading+MPI
+#tasks threads_per_tasks time
+10 2 10
+5 4 9
+10 2 5
+5 4 4
+1 8 0.5

@@ -1,0 +1,6 @@
+#Example multithreading
+$name threads time
+Baseline 1 10
+2 5
+4 1
+8 0.5
