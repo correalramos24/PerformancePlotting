@@ -65,6 +65,10 @@ class ExperimentCollection:
 
     @classmethod
     def from_txt_file(cls, file_name):
+        """
+        :param file_name: filename/path to a plain text
+        :return: An Experiment collection object
+        """
         aux_exp = []
         with open(file_name) as f:
             colum_names = []
@@ -114,7 +118,6 @@ class ExperimentCollection:
 
         data = {'cfg': [], 'real': [], 'expected': []}
         for exp in self.results:
-
             data['cfg'].append(exp.get_exp_parameter(in_base))
             data['expected'].append(exp.get_exp_parameter(f"expected_scal_by{in_base}"))
             data['real'].append(exp.get_exp_parameter(f"real_scal_by{in_base}"))
