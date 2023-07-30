@@ -111,7 +111,15 @@ class ExperimentCollection:
         for x in self.results:
             print(x)
 
-    def plot_scalability(self, in_base, as_categorical=False, save_name=None):
+    def plot_scalability(self, in_base, as_categorical=False, save_name=None, stack_fx=None):
+        """
+        Plot scalability of the results of all the experiments
+        :param in_base: Column name for scaling
+        :param as_categorical: Display in_base as categorical variable
+        :param save_name: Save plot into save_name png file
+        :param stack_fx: Stack same results with this Fx
+        :return:
+        """
         self.__compute_scalability(in_base)
 
         self.results.sort(key=lambda ex: ex.get_exp_parameter(in_base))
@@ -121,6 +129,10 @@ class ExperimentCollection:
             data['cfg'].append(exp.get_exp_parameter(in_base))
             data['expected'].append(exp.get_exp_parameter(f"expected_scal_by{in_base}"))
             data['real'].append(exp.get_exp_parameter(f"real_scal_by{in_base}"))
+
+        if stack_fx is not None:
+            raise Exception("Not implemented yet!")
+
 
         if not as_categorical:
             data['cfg'] = [int(x) for x in data['cfg']]
