@@ -112,17 +112,18 @@ class ExperimentCollection:
 
         self.results.sort(key=lambda ex: ex.get_exp_parameter(in_base))
 
-        cfg, real, expected = [], [], []
+        data = {'cfg': [], 'real': [], 'expected': []}
         for exp in self.results:
-            cfg.append(exp.get_exp_parameter(in_base))
-            real.append(exp.get_exp_parameter(f"expected_scal_by{in_base}"))
-            expected.append(exp.get_exp_parameter(f"real_scal_by{in_base}"))
+
+            data['cfg'].append(exp.get_exp_parameter(in_base))
+            data['expected'].append(exp.get_exp_parameter(f"expected_scal_by{in_base}"))
+            data['real'].append(exp.get_exp_parameter(f"real_scal_by{in_base}"))
 
         if not as_categorical:
-            cfg = [int(x) for x in cfg]
+            data['cfg'] = [int(x) for x in data['cfg']]
         plt.figure()
-        plt.plot(cfg, real, label="Real Sp(X)")
-        plt.plot(cfg, expected, label="Expected Sp(X)")
+        plt.plot('cfg', 'real', label="Real Sp(X)", data=data)
+        plt.plot('cfg', 'expected', label="Expected Sp(X)", data=data)
         plt.ylabel("Speedup (X)")
         plt.xlabel(in_base)
         plt.title(f"Scaling {in_base}")
