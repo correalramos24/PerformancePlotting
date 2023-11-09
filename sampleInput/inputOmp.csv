@@ -1,0 +1,7 @@
+#Example multithreading
+OMP_threads, Exec_time
+#Comment
+1,10
+4,2.5
+2,5
+8,4
