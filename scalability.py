@@ -48,7 +48,7 @@ class Experiment:
         return ret
 
     def __repr__(self) -> str:
-        ret = f"{self.name} {self.throughput} ({self.throughputUnit}) Params: "
+        ret = f"{self.name} {self.throughput} ({self.throughputUnit}) Info: "
         for k in self.params.values():
             ret += f"{k} "
         return ret
@@ -137,9 +137,9 @@ class ExperimentCollection:
         if not as_categorical:
             data['cfg'] = [int(x) for x in data['cfg']]
         plt.figure()
-        plt.plot('cfg', 'real', label="Real Sp(X)", data=data)
-        plt.plot('cfg', 'expected', label="Expected Sp(X)", data=data)
-        plt.ylabel("Speedup (X)")
+        plt.plot('cfg', 'expected', 'k', label="Expected Speed up", data=data)
+        plt.plot('cfg', 'real', 'b-^', label="Real Speed up", data=data)
+        plt.ylabel("Speed up (X)")
         plt.xlabel(in_base)
         plt.title(f"Scaling {in_base}")
         plt.legend()
